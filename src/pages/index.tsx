@@ -59,6 +59,13 @@ export default function Home({ user }: HomeProps) {
     window.location.href = url;
   };
 
+  if (!user)
+    return (
+      <Layout>
+        <div>Please log in.</div>
+      </Layout>
+    );
+
   return (
     <Layout>
       <div className="max-w-xl mx-auto px-4 py-8">
