@@ -43,6 +43,16 @@ export default function Profile({ generatedImages }: ProfileProps) {
 
 export async function getServerSideProps(context: any) {
   const session = await getSession({ ctx: context });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
   const host = context.req.headers.host as string;
   const httpProtocol = ["localhost", ":3000"].some((t) => host.includes(t))
     ? "http"

@@ -1,5 +1,5 @@
 import Layout from "@/components/layout";
-import { getSession, useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -10,7 +10,6 @@ interface HomeProps {
 export default function Home({ user }: HomeProps) {
   const [input, setInput] = useState("");
   const [imageSrc, setImageSrc] = useState(null);
-  const { data: session } = useSession();
 
   const generateImage = async () => {
     try {
@@ -122,10 +121,8 @@ export async function getServerSideProps(context: any) {
     ? "http"
     : "https";
   const url = `${httpProtocol}://${host}/api/user/get_by_email?email=${session?.user?.email}`;
-  console.log(url);
   const response = await fetch(url);
   const { data } = await response.json();
-  console.log(data);
   return {
     props: {
       user: data,
